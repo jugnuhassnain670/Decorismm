@@ -1,0 +1,133 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+    Admin
+{% endblock title %}
+{% block nav_title %}
+    <a class="navbar-brand" href="{% url 'vendor_admin' %}"> Dashboard </a>
+{% endblock nav_title %}
+
+{% block admin_content %}
+
+<!--Showing cards-->
+<div class="main-content">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card w-100" >
+                <div class="card-body">
+                  <h2 class="card-title">Decoration Designs</h2>
+                  <h6 class="card-subtitle mb-2 text-muted">Add/View Designs</h6>
+                  <a href="{% url 'add_product' %}" class="btn btn-outline-success">Add</a>
+                  <a href="{% url 'myProducts' %}" class="btn btn-outline-success">View</a>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card w-100" >
+                <div class="card-body">
+                  <h2 class="card-title">Blogs</h2>
+                  <h6 class="card-subtitle mb-2 text-muted">Add/View Blogs</h6>
+                  <a href="{% url 'add_blogPost' %}" class="btn btn-outline-success">Add</a>
+                  <a href="{% url 'myBlogs' %}" class="btn btn-outline-success">View</a>
+                </div>
+              </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card w-100" >
+                <div class="card-body">
+                  <h2 class="card-title">Add Category</h2>
+                  <h6 class="card-subtitle mb-2 text-muted">Add/View category</h6>
+                  <a href="#" class="btn btn-outline-success">Add</a>
+                  <a href="#" class="btn btn-outline-success">View</a>
+                </div>
+              </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card w-100" >
+                <div class="card-body">
+                  <h2 class="card-title">Card title</h2>
+                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                  <a href="#" class="btn btn-success">Add</a>
+                  <a href="#" class="btn btn success">Edit</a>
+                </div>
+              </div>
+        </div>
+        
+    </div>
+</div>
+<!--End of showing cards-->
+<!--Recent orders-->
+<div class="card " style="min-height: 485px">
+    <div class="card-header card-header-text ">
+        <h4 class="card-title font-weight-bold p-8">Orders</h4>
+        <p class="category p-8">Recent orders</p>
+    </div>
+    {% if orders %}
+        {% for order in orders %}
+            <div class="card-body p-8">
+                <h5 class="card-title">#{{ order.id }} - {{ order.first_name }} {{ order.last_name }}</h5>
+                <hr>
+                <b>Name:</b> {{ order.first_name }} {{ order.last_name }}<br>
+                <b>Address:</b> {{ order.address }}<br>
+                <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
+                <b>E-mail:</b> {{ order.email }}<br>
+                <b>Phone:</b> {{ order.phone }}
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Paid</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                            {% if item.vendor == request.user.vendor %}
+                                <tr>
+                                    <td>{{ item.product.title }}</td>
+                                        <td>${{ item.product.price }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.vendor_paid|yesno:"Yes,No" }}</td>
+                                        <td>${{ item.get_total_price }}</td>
+                                    </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+        
+    {% else %}
+        <p class="p-6">You don't have any order</p>
+    {% endif %}
+</div>
+
+{% endblock admin_content %}
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <div class="card ">
+    <div class="card-body">
+    Vendor-Admin| {{vendor.name}}
+    
+    <strong>My balance: </strong>${{ vendor.get_balance }}<br>
+        <strong>My paid amount: </strong>${{ vendor.get_paid_amount }}
+
+        <hr>
+
+        <a href="{% url 'edit_vendor' %}" class="button is-info is-uppercase">Edit</a>
+    <hr>
+    <a role="button" class="btn btn-primary mt-2" href="{% url 'logout' %}"> Log Out</a>
+</div> {% endcomment %}

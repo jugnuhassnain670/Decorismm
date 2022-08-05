@@ -1,0 +1,54 @@
+
+{% extends 'admin_base.html' %}
+
+{% block title %}
+    Edit Product
+{% endblock title %}
+
+
+{% block admin_content %}
+
+
+<div class="container  px-5  bg-white" >
+    <h2 class="text-center text-success fw-bold py-5">Edit Products</h2>
+<form class="row g-3" method="post" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+                
+    <div class="col-md-12">
+        <label  class="form-label">Vendor</label>
+        {{form.category}}
+    </div>
+      
+    <div class="col-md-12">
+        <label  class="form-label">Title</label>
+
+        {{form.title}}
+    </div>
+    <div class="col-12">
+        <label  class="form-label">Blog</label>
+      {{form.description}}
+    </div>
+    
+    <div class="col-md-6">
+        <label  class="form-label">Price</label>
+        {{form.price}}
+    </div>
+    <div class="col-md-6">
+        <label  class="form-label">Image</label>
+        {{form.image}}
+    </div>
+    
+    <div class="col-12 p-3">
+      <button type="submit" class="btn btn-outline-success py-2 px-4">Add</button>
+    </div>
+  </form>
+  <hr>
+    <h2 class="subtitle">Add Multiple Images</h2>
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        {{image_form.as_p}}
+        <button type="submit" class="btn btn-outline-success py-2 px-4 mb-5">Add Image</button>
+    </form>
+</div>  
+
+{% endblock admin_content %}

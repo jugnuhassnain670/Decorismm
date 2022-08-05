@@ -1,0 +1,50 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}
+    Edit Blog Post
+{% endblock title %}
+{% block nav_title %}
+    <a class="navbar-brand" href="#"> Edit Blog </a>
+{% endblock nav_title %}
+
+{% block admin_content %}
+
+
+<div class="container  px-5  bg-white" >
+    <h2 class="text-center text-success fw-body py-5">Edit Blog Post</h2>
+<form class="row g-3" method="post" action="." enctype="multipart/form-data">
+    {% csrf_token %}
+                
+    <div class="col-md-12">
+        <label  class="form-label">Vendor</label>
+        {{form.vendor}}
+    </div>
+      
+    <div class="col-md-12">
+        <label  class="form-label">Title</label>
+
+        {{form.title}}
+    </div>
+    <div class="col-12">
+        <label  class="form-label">Blog</label>
+      {{form.description}}
+    </div>
+    
+    <div class="col-md-6">
+        <label  class="form-label">Image</label>
+        {{form.image}}
+    </div>
+    <div class="col-md-6">
+        <label  class="form-label">Thumbnail</label>
+        {{form.thumbnail}}
+    </div>
+    
+    <div class="col-12 p-3">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+</div>  
+
+
+
+{% endblock admin_content %}

@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block title %}Design Collection{% endblock title %}
+{% block body_content %}
+    <div class="team" >
+        <div class="container mx-auto px-5">
+            <section  class="text-gray-600 body-font">
+                <div class="container px-5 py-24 mx-auto">
+                    <div class="flex flex-col text-center w-full mb-20">
+                        <h1 class="text-2xl font-medium title-font mb-4 text-gray-900 font-extrabold italic">Decoration Designs</h1>
+                        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr
+                            hexagon brooklyn
+                            asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't
+                            heard of them.</p>
+                    </div>
+                    <div class="flex flex-wrap -m-4">
+                        {% for product in newest_products%}
+                            <!-- Cards....  -->
+                            {% include 'list_items.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>  
+{% endblock body_content %}
+
+

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Search{% endblock title %}
+{% block body_content %}
+
+<div class="search-designs">
+    <div class="container mx-auto px-5">
+        <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+                <div class="flex flex-col text-center w-full mb-20">
+                    <h1 class="text-2xl font-medium title-font mb-4 text-gray-900 font-extrabold italic">Search term:{{query}}</h1>
+                    
+                </div>
+                <div class="flex flex-wrap -m-4">
+                    {% for product in products%}
+                        <!-- Cards....  -->
+                        {% include 'list_items.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+</div>  
+
+{% endblock body_content %}

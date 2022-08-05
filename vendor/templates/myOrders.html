@@ -1,0 +1,75 @@
+
+{% extends 'admin_base.html' %}
+
+
+
+{% block title %}
+    Orders
+{% endblock title %}
+
+
+{% block nav_title %}
+
+<a class="navbar-brand" href="{% url 'myOrders' %}"> Orders </a>
+{% endblock nav_title %}
+
+
+{% block admin_content %}
+
+
+<div class="card" style="min-height: 485px">
+    <div class="card-header card-header-text p-5">
+
+        <h2 class="card-title fw-bold ml-3">Orders</h2>
+        <p class="category fw-bold ml-3">List of all orders</p>
+        
+    
+        {% if orders %}
+        {% for order in orders %}
+            <div class="card-body">
+                <h5 class="card-title">#{{ order.id }} - {{ order.first_name }} {{ order.last_name }}</h5>
+                <hr>
+                <b>Name:</b> {{ order.first_name }} {{ order.last_name }}<br>
+                <b>Address:</b> {{ order.address }}<br>
+                <b>Zip and place:</b> {{ order.zipcode }} {{ order.place }}<br>
+                <b>E-mail:</b> {{ order.email }}<br>
+                <b>Phone:</b> {{ order.phone }}
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-primary">
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Paid</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all %}
+                            {% if item.vendor == request.user.vendor %}
+                                <tr>
+                                    <td>{{ item.product.title }}</td>
+                                        <td>${{ item.product.price }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.vendor_paid|yesno:"Yes,No" }}</td>
+                                        <td>${{ item.get_total_price }}</td>
+                                    </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+        
+    {% else %}
+        <p class="fw-bold ml-3 p-3 text-center">You don't have any order</p>
+    {% endif %} 
+    </div>
+</div>
+
+
+
+
+{% endblock admin_content %}

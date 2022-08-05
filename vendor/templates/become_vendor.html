@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Become_Vendor{% endblock title %}
+{% block body_content %}
+<div class="signup-container py-5">
+    <div class="container mx-auto px-5">
+        <form class="max-w-xl mx-auto" method="post" action=".">
+            {% csrf_token %}
+            <p class="text-center font-bold py-4">Become Vendor| Register your account</p>
+
+            <!-- Name input -->
+            <div class="form-outline mb-4">
+                {{form.username}}
+                
+            </div>
+
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+
+                {{form.first_name}}
+
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+
+                {{form.last_name}}
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                {{form.email}}
+
+            </div>
+
+            <!-- Repeat Password input -->
+            <div class="form-outline mb-4">
+                {{form.password1}}
+
+            </div>
+            <div class="form-outline mb-4">
+                {{form.password2}}
+
+            </div>
+            <!-- Submit button -->
+            <button type="submit"
+                class="flex justify-center lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-secondary-color border-0 py-2 px-6 focus:outline-none hover:bg-secondary-color rounded w-full">Signup</button>
+        </form>
+        <div class="max-w-xl mx-auto p-2">
+            <p class="text-center py-2 font-bold">Already have an account| <a href="{% url 'login' %}" class="text-blue-900" >Login into your account </a></p>
+            
+                
+        </div>
+    </div>
+</div>
+
+
+{% endblock body_content %}
+
+
+

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}{{category.title}}{% endblock title %}
+{% block body_content %}
+    <div class="product-container">
+        <div class="container mx-auto px-5 py-5">
+            <h1 class="text-3xl text-center">{{category.title}}</h1>
+            <div
+                class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-x-6 gap-y-12 w-full mt-6">
+                <!-- Product Tile Start -->
+                
+                {% for product in category.products.all%}
+                    <div>
+                        <a href="{% url 'product' product.category.slug product.slug %}" class="block h-64 rounded-lg shadow-lg bg-white"><img 
+                            src="{{product.get_thumbnail}}"></a>
+                        <div class="flex items-center justify-between mt-3">
+                            <div>
+                                <a href="#" class="font-medium">{{product.title}}</a>
+                                <a class="flex items-center" href="#">
+                                    <span class="text-xs font-medium text-gray-600">by</span>
+                                    <span class="text-xs font-medium ml-1 text-secondary-color">{{ product.vendor.name }}</span>
+                                </a>
+                            </div>
+                            <span class="flex items-center h-8 bg-yellow-400 text-white text-sm px-2 rounded">Rs.{{product.price}}</span>
+                        </div>
+                    </div> 
+                {% endfor %}    
+            </div>
+        </div>
+    </div>
+{% endblock body_content %}
+    
+
+
+
+
+
+        
+        

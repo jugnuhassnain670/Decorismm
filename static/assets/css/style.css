@@ -1,0 +1,36 @@
+:root {
+    --primary-color: #fdd032;
+    --seconday-color: #112214;
+    --tertiary-color: #f4f1f1;
+
+     --main-white-color: white;
+  --main-black-color: black;
+}
+
+.primary-color {
+    color: var(--primary-color);
+}
+
+.secondary-color {
+    color: var(--secondary-color);
+}
+
+.tertiary-color {
+    color: var(--tertiary-color);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.group:hover .group-hover\:block {
+  display: block !important;
+}
+
+
+a:hover {
+    color: currentColor !important;
+}

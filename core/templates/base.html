@@ -1,0 +1,264 @@
+{% load static %}
+<!-- new base start -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+            integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+            crossorigin="anonymous" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto+Serif:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic"
+            rel="stylesheet" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+        <link rel="stylesheet" href="{% static 'assets/css/style.css'%}">
+        <link rel="stylesheet" href="{% static 'assets/css/banner.css'%}">
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'primary-color': '#fdd032',
+                            'secondary-color': '#112214',
+                            'tertiary-color': '#f4f1f1',
+                        }
+                    }
+                }
+            }
+        </script>
+        <style type="text/tailwindcss">
+            @layer utilities {
+              .container {
+                max-width: 1440px;
+              }
+            }
+            @layer base {
+                html {
+                    font-family: "Roboto", system-ui, sans-serif;
+            }
+            }
+        </style>
+        <title>{% block title %}{% endblock title %}</title>
+    </head>
+
+    <body>
+        <!-- header start -->
+        <header>
+            <div class="page-header bg-secondary-color">
+                <div class="container px-5 py-4 mx-auto">
+                    <div class="primary-header flex flex-wrap items-center justify-between text-tertiary-color">
+                        <a href="/" class="logo md:text-5xl text-3xl">
+                            Decorism<span class="text-primary-color"></span>
+                        </a>
+                        
+                            <div class="search-bar flex items-center w-full max-w-md">
+                                
+                                    <input type="text" placeholder="Search" class="rounded-l-md border-1 p-2 w-full text-gray-900" name="query">
+                                    <button class="bg-primary-color p-2 rounded-r-md" typy="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24"
+                                            height="24">
+                                            <path
+                                                d="M23.707,22.293l-5.969-5.969a10.016,10.016,0,1,0-1.414,1.414l5.969,5.969a1,1,0,0,0,1.414-1.414ZM10,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,10,18Z" />
+                                        </svg>
+                                    </button>
+                                
+                            </div>
+                        
+                        <div class="right-header-block flex items-center sm: py-2">
+                            <div class="button-container mr-5">
+                                {% if request.user.is_authenticated %}
+                                    <a href="{% url 'vendor_admin' %}" class="primary-button">
+                                        <span>Vendor-Admin</span>
+                                    </a> 
+                                {% else %} 
+                                    <a href="{% url 'become_vendor' %}" class="primary-button">
+                                        <span>Become-Vendor</span>
+                                    </a>
+                                {% endif %}                                
+                            </div>
+                            <div class="minicart">
+                                <a href="{% url 'cart' %}"  class="action-cart flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="24" height="24" x="0"
+                                        y="0" viewBox="0 0 24 24" style="enable-background:new 0 0 512 512"
+                                        xml:space="preserve">
+                                        <g>
+                                            <path xmlns="http://www.w3.org/2000/svg"
+                                                d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077Z"
+                                                fill="#ffffff" data-original="#000000" />
+                                            <circle xmlns="http://www.w3.org/2000/svg" cx="7" cy="22" r="2"
+                                                fill="#ffffff" data-original="#000000" />
+                                            <circle xmlns="http://www.w3.org/2000/svg" cx="17" cy="22" r="2"
+                                                fill="#ffffff" data-original="#000000" />
+                                        </g>
+                                    </svg>
+                                    <span class="mx-1">cart</span>
+                                    <span class="count">{% if cart %}({{ cart|length }}){% endif %}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="navigation bg-gray-100">
+                <div class="container mx-auto px-5">
+                    <nav>
+                        <ul class="flex list-none text-left">
+                            <li>
+                                <a class="flex mr-5 hover:text-gray-900 py-4" href="/">Home</a>
+                            </li>
+                            
+                            {% for category in menu_categories %}
+                                <li >
+                                    <a class="flex mr-5 hover:text-gray-900 py-4"
+                                        href="{% url 'category' category.slug %}">{{category.title}}</a>
+                                </li>
+                            {% endfor %}
+
+                            
+                            <li>
+                                <a class="flex mr-7 space-x-3 hover:text-gray-900 py-4" href="{% url 'contactUs' %}">ContactUs</a>
+                            </li>
+                            </li>
+                            <li>
+                                <a class="flex hover:text-gray-900 py-4" href="{% url 'blog' %}">Blogs</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </nav>
+        </header>
+        <!-- header end -->
+        {% block owl_slider %}
+        {% endblock owl_slider %}
+        {% block body_content %}
+        {% endblock body_content %}
+        
+
+
+        <!-- Footer start -->
+        <footer class="text-gray-50 body-font bg-zinc-800">
+            <div class="container px-5 py-20 mx-auto">
+                <div class="flex flex-wrap md:text-left text-left order-first">
+                    <div class="lg:w-1/4 md:w-1/2 w-full px-4 mt-10">
+                        <h2 class="title-font text-5xl text-gray-50 mb-3 italic font-bold  ">DECORISM</h2>
+                        <nav class="list-none mb-10">
+                            <p class="text-gray-50 text-sm mt-2 md:text-left text-center">Make your designs</p>
+                        </nav>
+                    </div>
+                    <div class="lg:w-1/4 md:w-1/2 w-full px-4">
+                        
+                        <nav class="list-none mb-10 space-y-8 font-bold">
+                            <li>
+                                <a class="text-gray-50 hover:text-gray-50">About Us</a>
+                            </li>
+                            
+                            <li>
+                                <a class="text-gray-50 hover:text-gray-50">Contact</a>
+                            </li>
+                            <li>
+                                <a class="text-gray-50 hover:text-gray-50">Blogs</a>
+                            </li>
+                            
+                        </nav>
+                    </div>
+                    <div class="lg:w-1/4 md:w-1/2 w-full px-4 mt-12">
+                        <nav class="list-none mb-10  font-bold">
+                            
+                            
+                            <li>
+                                <a class="text-gray-50 hover:text-gray-50">Email: Decorism@gmail.com</a>
+                                <br>
+                                <h3>+92-309-5630142</h3>
+                            </li>
+                            
+                        </nav>
+                        </nav>
+                    </div>
+                    <div class="lg:w-1/4 md:w-1/2 w-full px-4">
+                        <h2 class="title-font font-bold text-gray-50 tracking-widest text-sm mb-3">NewsLetter Subscription</h2>
+                        <div class="flex flex-wrap justify-center items-end md:justify-start">
+                            <form action="{% url 'NewsLetters' %}" method="post">
+                                {% csrf_token %}
+                                <div class="relative w-full mb-1 p-1">
+                                    <label for="footer-field" class="leading-7 text-sm text-gray-50 font-bold">Enter your Email</label>
+                                    <input type="email" id="footer-field" placeholder="Enter Your Email ..." name="email"
+                                        class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-900 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                </div>
+                                <button
+                                    class="lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex justify-center text-white bg-secondary-color border-0 py-2 px-6 focus:outline-none hover:bg-secondary-color rounded w-full" type="submit">Subscribe</button>
+                            </form>    
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gray-100">
+                <div class="container px-5 py-6 mx-auto flex items-center sm:flex-row flex-col">
+                    <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+                        <span class="ml-3 text-xl">Decorism<span class="text-primary-color">.</span></span>
+                    </a>
+                    <p class="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">© 2020 decorisim —
+                        <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" class="text-gray-600 ml-1"
+                            target="_blank">@decorisim</a>
+                    </p>
+                    <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+                        <a class="text-gray-500">
+                            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-5 h-5" viewBox="0 0 24 24">
+                                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a class="ml-3 text-gray-500">
+                            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-5 h-5" viewBox="0 0 24 24">
+                                <path
+                                    d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a class="ml-3 text-gray-500">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                            </svg>
+                        </a>
+                        <a class="ml-3 text-gray-500">
+                            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewBox="0 0 24 24">
+                                <path stroke="none"
+                                    d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z">
+                                </path>
+                                <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                            </svg>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </footer>
+        <!-- Footer end -->
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'
+            integrity='sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=='
+            crossorigin='anonymous'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="{% static 'assets/js/main.js' %}"></script>
+        <script src="{% static 'js/script.js' %}">  </script>
+        {% block scripts %}
+        {% endblock scripts %}
+    </body>
+
+</html>
+
+<!-- new base end  -->
+

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title %}Cart{% endblock title %}
+{% block body_content %}
+<div class="checkout-container py-5">
+    <div class="container mx-auto px-5">
+        <form class="max-w-xl mx-auto" method="post" action="." id="payment-form">
+            
+            {% csrf_token %}    
+            <h1 class="text-center py-2 text-lg italic font-bold">Fill your information</h1>
+            
+            {% if form.non_field_errors %}
+                <div class="notification is-danger">
+                    {{ form.non_field_errors}}
+                </div>
+            {% endif %}
+            {% if form.errors %}
+                <div class="notification is-danger">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li><strong>{{ field.label }}: </strong>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %} 
+            <!-- Name input -->
+            <div class="form-outline mb-4">
+                <input type="text"  placeholder="First Name" name="first_name"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+            </div>
+
+            <!-- lastname input -->
+            <div class="form-outline mb-4">
+
+                <input type="text" placeholder="Last Name" name="last_name"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+
+                <input type="email"  placeholder="Email" name="email" 
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+            </div>
+            <!-- Phone input -->
+            <div class="form-outline mb-4">
+
+                <input type="text"  placeholder="Contact no"  name="phone"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+            </div>
+
+            <!-- Address input -->
+            <div class="form-outline mb-4">
+                <input type="text" placeholder="Address" name="address"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+
+            </div>
+
+            <!-- Zip code -->
+            <div class="form-outline mb-4">
+                <input type="text"  placeholder="Zip code" name="zipcode"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+
+            </div>
+            <!-- Zip code -->
+            <div class="form-outline mb-4">
+                <input type="text"  placeholder="Place" name="place"
+                    class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-primary-color focus:bg-white focus:ring-2 focus:ring-primary-color text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+
+            </div>
+            
+                <h2 class="subtitle">Payment information</h2>
+                <div id="card-element">
+                    <!-- A Stripe Element will be inserted here -->
+                </div>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="notification is-danger">{{ message }}</div>
+                {% endfor %}
+            {% endif %} 
+
+            <!-- Submit button -->
+            <button type="submit"
+                class="flex justify-center lg:mt-2 xl:mt-0 flex-shrink-0 inline-flex text-white bg-secondary-color border-0 py-2 px-6 focus:outline-none hover:bg-secondary-color rounded w-full">Confirm Order</button>
+        </form>
+    </div>
+</div>
+{% endblock body_content%}
+
+{% block scripts %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        var stripe = Stripe('{{ stripe_pub_key }}');
+        var elements = stripe.elements();
+
+        var card = elements.create('card');
+
+        card.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    stripeTokenHandler(result.token);
+                }
+            });
+        });
+
+        function stripeTokenHandler(token) {
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripe_token');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+
+            form.submit();
+        }
+    </script>  
+{% endblock scripts %}
